@@ -13,7 +13,7 @@ public class Main {
         System.out.println("Give me the second number:");
         double secondNumber = scanner.nextDouble();
 
-        System.out.println("What would you like to do?");
+        System.out.println("What would you like to do? (A)dd, (M)ultiply, (D)ivide, (S)subract");
         String option = scanner.nextLine();
 
         String joinNumbers = scanner.nextLine();
@@ -29,6 +29,9 @@ public class Main {
         }
         else if (joinNumbers.equalsIgnoreCase("S")){
             System.out.println(firstNumber - secondNumber);
+        }
+        else{
+            System.out.println("Sorry, that is not a valid option!");
         }
 
     }
