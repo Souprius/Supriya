@@ -46,7 +46,9 @@ public class Main {
             System.out.println("Your base rental rate per day remains at $29.99.");
         }
         double totalCost = (basicRental + options) * numberOfDays;
+        double
         System.out.println("Your basic rental cost is: $" + basicRental * numberOfDays);
+
         System.out.println("Your add-ons cost is: $" + options * numberOfDays);
         System.out.println("Your total rental charge is: $" + totalCost);
         }
