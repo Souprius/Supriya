@@ -14,6 +14,7 @@ public class Main {
         while (oddNumber <= 19) {
 
             oddNumber++;
+            //this will check for even #
             if (oddNumber % 2 == 0) {
                 continue;
             }
