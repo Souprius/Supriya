@@ -16,7 +16,7 @@ public class Main {
         book[4] = new Book(5, "978-5678901234", false, "David Wilson", "1984");
         book[5] = new Book(6, "978-6789012345", true, "Jessica White", "To the Lighthouse");
         book[6] = new Book(7, "978-7890123456", true, "Christopher Anderson", "Brave New World");
-        book[7] = new Book(8, "978-8901234567", true, "Olivia Taylor", "Moby Dick");
+        book[7] = new Book(8, "978-8901234567", false, "Olivia Taylor", "Moby Dick");
         book[8] = new Book(9, "978-9012345678", false, "Matthew Miller", "The Catcher in the Rye");
         book[9] = new Book(10, "978-0123456789", true, "Laura Martinez", "The Lord of the Rings");
         book[10] = new Book(11, "978-1230456789", true, "Kevin Adams", "Wuthering Heights");
@@ -30,8 +30,8 @@ public class Main {
         book[18] = new Book(19, "978-9018234567", false, "Peter Parker", "Crime and Punishment");
         book[19] = new Book(20, "978-0129345678", false, "Ava Foster", "One Hundred Years of Solitude");
 
-        boolean libraryTime = true;
-        while (libraryTime) {
+        /*boolean libraryTime = true;
+        while (libraryTime) {*/
 
             System.out.println("Welcome to the Neighborhood Library. Please choose from the below options");
             System.out.println("1) Show available books");
@@ -60,7 +60,7 @@ public class Main {
                     } else {
                         System.exit(0);
                     }
-                    libraryTime = false;
+
                     break;
                 case "2":
 
@@ -74,7 +74,9 @@ public class Main {
                         checkIn(book);
                     } else if (checking.equalsIgnoreCase("X")) {
                         System.out.println("Returning Home");
-                        libraryTime = false;
+                        System.exit(0);
+
+
 
                     }
                     break;
@@ -87,12 +89,12 @@ public class Main {
                     System.out.println("Please select a valid option or Exit");
             }
 
-        }
+
     }
 
     public static void availableBooks(Book[] book){
         for(Book b: book){
-            if(b.isCheckedOut()){
+            if(!b.isCheckedOut()){
                 System.out.printf("Book ID: %d, ISBN: %s, and Title: %s  ",
                         b.getId(), b.getIsbn(), b.getBookTitle());
             }
@@ -101,7 +103,7 @@ public class Main {
 
     public static void checkedOutBooks(Book[] book) {
         for (Book b : book) {
-            if (!b.isCheckedOut()) {
+            if (b.isCheckedOut()) {
                 System.out.printf("Book ID: %d, ISBN: %s, and Title: %s is checked out.",
                         b.getId(), b.getIsbn(), b.getBookTitle());
             }
@@ -113,13 +115,14 @@ public class Main {
 
     public static void checkOut(Book[] book) {
         for (Book b : book) {
+
             System.out.println("What is your name? (First and Last) ");
             String newName = scanner.nextLine();
 
             System.out.println("What book would you like to check out?");
             String title = scanner.nextLine();
 
-            if (b.isCheckedOut() && b.getBookTitle().equalsIgnoreCase(title)) {
+            if (!b.isCheckedOut() && b.getBookTitle().equalsIgnoreCase(title)) {
                 b.checkOut(newName);
                 System.out.printf("Book ID: %d, ISBN: %s and Title: %s is checked out to " + newName,
                         b.getId(), b.getIsbn(), b.getBookTitle());
@@ -131,10 +134,11 @@ public class Main {
     }
         //want to prompt user for info
         public static void checkIn (Book[]book){
-            System.out.println("Time to check in the book.");
-            System.out.println("What is the Book ID");
-            int bookID = scanner.nextInt();
-            for (Book b : book) { //ensures that can only check in a book that is checked out
+            for (Book b : book) {
+                System.out.println("Time to check in the book.");
+                System.out.println("What is the Book ID");
+                int bookID = scanner.nextInt();
+                    //ensures that can only check in a book that is checked out
                 if (b != null && bookID == b.getId() && b.isCheckedOut()) {
                     b.checkIn();
                     System.out.printf("The Book ID %d has been checked in.", b.getId());
