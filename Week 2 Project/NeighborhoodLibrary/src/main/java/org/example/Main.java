@@ -123,7 +123,9 @@ public class Main {
             String title = scanner.nextLine();
 
             if (!b.isCheckedOut() && b.getBookTitle().equalsIgnoreCase(title)) {
+
                 b.checkOut(newName);
+
                 System.out.printf("Book ID: %d, ISBN: %s and Title: %s is checked out to " + newName,
                         b.getId(), b.getIsbn(), b.getBookTitle());
 
