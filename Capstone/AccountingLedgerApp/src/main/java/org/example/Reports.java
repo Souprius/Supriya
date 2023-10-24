@@ -92,7 +92,7 @@ public class Reports {
     //search by vendor
 public void searchVendor(String vendor){
         ArrayList<Transactions> transactions = ShowAllItems();
-
+//should iterate to search for vendor
         Transactions vendorID = null;
         for(Transactions v: transactions){
             if(v.getVendor().equalsIgnoreCase(vendor)){
@@ -105,7 +105,7 @@ try{
     search.write("date|time|description|vendor|amount" + "\n");
 
     for(Transactions sv: transactions){
-
+//i want it to print out the specific vendor lines
     }
 } catch (Exception s){
     System.out.println("Unable to generate report. Let's try again.");

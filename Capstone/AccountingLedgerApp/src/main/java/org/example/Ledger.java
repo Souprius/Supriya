@@ -67,7 +67,11 @@ public class Ledger {
     }
 
     public void showDeposit(){ //only entries that are deposits into the account
-
+        for(Transactions sd: transactions){
+            if(sd.getAmount() >= 1){
+                System.out.println(sd);
+            }
+        }
     }
 
     public void showPayments(){ //only negative entries
