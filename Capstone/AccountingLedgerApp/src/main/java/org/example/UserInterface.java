@@ -63,10 +63,10 @@ public void displayLedgerScreen(){
                     showAllItems();
                     break;
                 case "D":
-
+                    showDeposit();
                     break;
                 case "P":
-
+                    showPayments();
                     break;
                 case "R":
                     displayReportingScreen();

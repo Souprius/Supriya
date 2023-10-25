@@ -69,12 +69,19 @@ public class Ledger {
     public void showDeposit(){ //only entries that are deposits into the account
         for(Transactions sd: transactions){
             if(sd.getAmount() >= 1){
-                System.out.println(sd);
+                System.out.printf("Date: %s  | Time: %s  | Description: %s  | Vendor: %s  | Amount: %s ",
+                        sd.getDate(), sd.getTime(), sd.getDesc(), sd.getVendor(), sd.getAmount());
             }
         }
     }
 
     public void showPayments(){ //only negative entries
+        for(Transactions sp: transactions){
+            if(sp.getAmount() <= 0){
+                System.out.printf("Date: %s  | Time: %s  | Description: %s  | Vendor: %s  | Amount: %s ",
+                        sp.getDate(), sp.getTime(), sp.getDesc(), sp.getVendor(), sp.getAmount());
+            }
+        }
 
     }
 }
