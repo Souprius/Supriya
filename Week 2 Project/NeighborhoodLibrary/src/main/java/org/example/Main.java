@@ -1,5 +1,12 @@
 package org.example;
 
+/*
+You have a good start but this will need some work.
+First, when trying to display the book be sure to use a new line indicator so it isn't all just smushed
+into a single line. I didn't realize there was a menu
+Checking in a book is infinite, so you may want to use while loops and booleans to make the menu
+not go on forever. This will need a bit of love and care but you have a good start.
+ */
 
 import java.util.Scanner;
 
@@ -30,6 +37,7 @@ public class Main {
         book[18] = new Book(19, "978-9018234567", false, "Peter Parker", "Crime and Punishment");
         book[19] = new Book(20, "978-0129345678", false, "Ava Foster", "One Hundred Years of Solitude");
 
+        //You had the while loop here, why did you get rid of it?
         /*boolean libraryTime = true;
         while (libraryTime) {*/
 
@@ -47,7 +55,7 @@ public class Main {
 
             switch (userInput) {
                 case "1":
-
+                    //I like the use of methods to break up functionality
                     availableBooks(book);
 
                     System.out.println("Would you like to check out a book or exit? (type: check out)");
