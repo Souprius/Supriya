@@ -41,7 +41,7 @@ public class Ledger {
         return transactions;
     }
 
-    public static void addDeposit(Transactions transactions){
+   /* public void addDeposit(ArrayList<Transactions> transactions){
         try{
             FileWriter addDeposit = new FileWriter("src/main/resources/transactions.csv", true);
             String depositLine = transactions.toString();
@@ -51,9 +51,40 @@ public class Ledger {
         }catch (Exception ex){
             System.out.println("Unable to add item. Let's try again.");
         }
+    }*/
+
+    public void addDeposit(){
+        System.out.println("What is the date of transaction? Format: YYYY-MM-DD");
+        String date = scanner.nextLine();
+
+        System.out.println("What is the time of the transaction? Format: HH:MM:SS");
+        String time = scanner.nextLine();
+
+        System.out.println("What is a short description of the transaction?");
+        String desc = scanner.nextLine();
+
+        System.out.println("Who is the vendor?");
+        String vendor = scanner.nextLine();
+
+        System.out.println("What is the amount?");
+        double amount = scanner.nextDouble();
+
+        scanner.nextLine();
+
+        try{
+            FileWriter added = new FileWriter("src/main/resources/transactions.csv",true);
+
+            added.write(date + "|" + time + "|" + desc + "|" + vendor + "|" + amount + "\n");
+            added.close();
+
+            System.out.println("Your deposit has been made. Thank you.");
+
+        } catch(IOException ee){
+            System.out.println("Unable to add deposit. Let's try again later.");
+        }
     }
 
-    public static void makeAPayment(Transactions transactions){
+  /*  public void makeAPayment(ArrayList<Transactions> ){
         try{
             FileWriter makePay = new FileWriter("src/main/resources/transactions.csv",true);
             String payLine = transactions.toString();
@@ -64,9 +95,42 @@ public class Ledger {
         }catch(IOException ex){
             System.out.println("Unable to make a payment. Let's try again.");
         }
+    }*/
+
+    Scanner scanner = new Scanner(System.in);
+    public void makeAPayment(){
+
+        System.out.println("What is the date of transaction? Format: YYYY-MM-DD");
+        String dDate = scanner.nextLine();
+
+        System.out.println("What is the time of the transaction? Format: HH:MM:SS");
+        String dTime = scanner.nextLine();
+
+        System.out.println("What is a short description of the transaction?");
+        String dDesc = scanner.nextLine();
+
+        System.out.println("Who is the vendor?");
+        String dVendor = scanner.nextLine();
+
+        System.out.println("What was the amount?");
+        double dAmount = scanner.nextDouble();
+
+        scanner.nextLine();
+
+        try{
+            FileWriter payment = new FileWriter("src/main/resources/transactions.csv",true);
+
+            payment.write(dDate + "|" + dTime + "|" + dDesc + "|" + dVendor + "|" + dAmount + "\n");
+            payment.close();
+
+            System.out.println("Your payment has been added. Thank you.");
+        }
+        catch (IOException ex){
+            System.out.println("Unable to add payment. Let's try again later.");
+        }
     }
 
-    public void showDeposit(){ //only entries that are deposits into the account
+    public void showDeposit(ArrayList<Transactions> transactions){ //only entries that are deposits into the account
         for(Transactions sd: transactions){
             if(sd.getAmount() >= 1){
                 System.out.printf("Date: %s  | Time: %s  | Description: %s  | Vendor: %s  | Amount: %s ",
@@ -75,7 +139,7 @@ public class Ledger {
         }
     }
 
-    public void showPayments(){ //only negative entries
+    public void showPayments(ArrayList<Transactions> transactions){ //only negative entries
         for(Transactions sp: transactions){
             if(sp.getAmount() <= 0){
                 System.out.printf("Date: %s  | Time: %s  | Description: %s  | Vendor: %s  | Amount: %s ",
