@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 
 public class UserInterface {
-    Ledger l = new Ledger();
 
     public void homeOptions(){
     Scanner scanner = new Scanner(System.in);
@@ -44,15 +43,16 @@ public class UserInterface {
             }
 
         }catch(Exception ex){
-            System.out.println("Please select a valid option.");
+            System.out.println("Please select a valid option!");
         }
     }
 }
 
+
 public void displayLedgerScreen(){
     Scanner scanner = new Scanner(System.in);
-
     Ledger ledger = new Ledger();
+
 
     boolean viewingLedger = true;
     while(viewingLedger){
@@ -65,17 +65,16 @@ public void displayLedgerScreen(){
         System.out.println("H - Home");
         String userInput2 = scanner.nextLine();
 
-        System.out.println(userInput2);
         try{
             switch(userInput2){
                 case "A":
                     ledger.showAllItems();
                     break;
                 case "D":
-                    ledger.showDeposit(l.listAllItems());
+                    ledger.showDeposit();
                     break;
                 case "P":
-                    ledger.showPayments(l.listAllItems());
+                    ledger.showPayments();
                     break;
                 case "R":
                     displayReportingScreen();
@@ -100,6 +99,8 @@ public void displayReportingScreen(){
 
     Reports reportings = new Reports();
 
+    ArrayList<Transactions> rmoney = new ArrayList<>();
+
     boolean reporting = true;
     while(reporting){
         System.out.println(" --- Reports Home --- ");
@@ -115,25 +116,28 @@ public void displayReportingScreen(){
         try {
             switch (userInput3) {
                 case 1:
-                    reportings.monthToDate(l.listAllItems());
+                    reportings.monthToDate();
                     break;
                 case 2:
-                    reportings.previousMonth(l.listAllItems());
+                    reportings.previousMonth();
                     break;
                 case 3:
-                    reportings.yearToDate(l.listAllItems());
+                    reportings.yearToDate();
                     break;
                 case 4:
-                    reportings.previousYear(l.listAllItems());
+                    reportings.previousYear();
                     break;
                 case 5:
+                    scanner.nextLine();
+
                     System.out.println("What vendor would you like to look up?");
                     String selection = scanner.nextLine();
 
-                    reportings.searchVendor(l.listAllItems(), selection);
+                    reportings.searchVendor(selection);
                     break;
                 case 0:
                     displayLedgerScreen();
+                    reporting = false;
                     break;
                 default:
                     System.out.println("Please select a valid option.");
@@ -141,7 +145,7 @@ public void displayReportingScreen(){
             }
 
         } catch (Exception r){
-            System.out.println("Please select a valid option.");
+            System.out.println("Please select a valid option!");
         }
     }
 
