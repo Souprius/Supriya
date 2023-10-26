@@ -9,7 +9,17 @@ import java.util.Scanner;
 
 public class Ledger {
 
-    public ArrayList<Transactions> showAllItems() {
+    public void showAllItems(){ // print transactions
+        ArrayList<Transactions> money = loadTransactions();
+
+        for (Transactions action : money) {
+            System.out.printf("Date: %s | Time: %s | Description: %s | Vendor: %s | Amount: %.2f %n",
+                    action.getDate(), action.getTime(), action.getDesc(), action.getVendor(), action.getAmount());
+        }
+    }
+
+    public ArrayList<Transactions> loadTransactions() { // it only loads the transactions - no printing or anything
+
         ArrayList<Transactions> transactions = new ArrayList<>();
 
         try {
@@ -31,27 +41,12 @@ public class Ledger {
                 Transactions newAction = new Transactions(date, time, desc, vendor, amount);
                 transactions.add(newAction);
             }
-            for (Transactions action : transactions) {
-                System.out.printf("Date: %s | Time: %s | Description: %s | Vendor: %s | Amount: %.2f %n",
-                        action.getDate(), action.getTime(), action.getDesc(), action.getVendor(), action.getAmount());
-            }
+
         } catch (FileNotFoundException ex) {
             System.out.println("Could not find transactions. Let's try again later.");
         }
         return transactions;
     }
-
-   /* public void addDeposit(ArrayList<Transactions> transactions){
-        try{
-            FileWriter addDeposit = new FileWriter("src/main/resources/transactions.csv", true);
-            String depositLine = transactions.toString();
-
-            addDeposit.write(depositLine);
-            addDeposit.close();
-        }catch (Exception ex){
-            System.out.println("Unable to add item. Let's try again.");
-        }
-    }*/
 
     public void addDeposit(){
         System.out.println("What is the date of transaction? Format: YYYY-MM-DD");
@@ -83,19 +78,6 @@ public class Ledger {
             System.out.println("Unable to add deposit. Let's try again later.");
         }
     }
-
-  /*  public void makeAPayment(ArrayList<Transactions> ){
-        try{
-            FileWriter makePay = new FileWriter("src/main/resources/transactions.csv",true);
-            String payLine = transactions.toString();
-
-            makePay.write(payLine);
-            makePay.close();
-
-        }catch(IOException ex){
-            System.out.println("Unable to make a payment. Let's try again.");
-        }
-    }*/
 
     Scanner scanner = new Scanner(System.in);
     public void makeAPayment(){
@@ -130,18 +112,20 @@ public class Ledger {
         }
     }
 
-    public void showDeposit(ArrayList<Transactions> transactions){ //only entries that are deposits into the account
-        for(Transactions sd: transactions){
-            if(sd.getAmount() >= 1){
+    public void showDeposit(){ //only entries that are deposits into the account
+        ArrayList<Transactions> deposit = loadTransactions();
+        for(Transactions sd: deposit){
+            if(sd.getAmount() > 1){
                 System.out.printf("Date: %s  | Time: %s  | Description: %s  | Vendor: %s  | Amount: %s ",
                         sd.getDate(), sd.getTime(), sd.getDesc(), sd.getVendor(), sd.getAmount());
             }
         }
     }
 
-    public void showPayments(ArrayList<Transactions> transactions){ //only negative entries
-        for(Transactions sp: transactions){
-            if(sp.getAmount() <= 0){
+    public void showPayments(){ //only negative entries
+        ArrayList<Transactions> pay = loadTransactions();
+        for(Transactions sp: pay){
+            if(sp.getAmount() < 0){
                 System.out.printf("Date: %s  | Time: %s  | Description: %s  | Vendor: %s  | Amount: %s ",
                         sp.getDate(), sp.getTime(), sp.getDesc(), sp.getVendor(), sp.getAmount());
             }

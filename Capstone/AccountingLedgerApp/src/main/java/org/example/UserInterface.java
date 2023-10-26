@@ -1,26 +1,26 @@
 package org.example;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
 public class UserInterface {
 
-public void homeOptions(){
+    public void homeOptions(){
     Scanner scanner = new Scanner(System.in);
-
-
-    System.out.println(" --- Home --- ");
-    System.out.println("Please select an option (D, P, L, X) from the list below.");
-    System.out.println("D - Add Deposit");
-    System.out.println("P - Make a Payment");
-    System.out.println("L - Open Ledger");
-    System.out.println("X - Exit");
-    String userInput = scanner.nextLine();
 
     Ledger statement = new Ledger();
 
     boolean banking = true;
     while(banking){
+        System.out.println(" --- Home --- ");
+        System.out.println("Please select an option (D, P, L, X) from the list below.");
+        System.out.println("D - Add Deposit");
+        System.out.println("P - Make a Payment");
+        System.out.println("L - Open Ledger");
+        System.out.println("X - Exit");
+        String userInput = scanner.nextLine();
+
         try{
             switch(userInput){
                 case "D":
@@ -39,30 +39,32 @@ public void homeOptions(){
                     break;
                 default:
                     System.out.println("Please select a valid option.");
+                    break;
             }
 
         }catch(Exception ex){
-            System.out.println("Please select a valid option.");
+            System.out.println("Please select a valid option!");
         }
     }
 }
 
+
 public void displayLedgerScreen(){
     Scanner scanner = new Scanner(System.in);
-
-    System.out.println(" --- Ledger Home --- ");
-    System.out.println("Please select an option (A, D, P, R, H) from the list below.");
-    System.out.println("A - Show All");
-    System.out.println("D - Show Deposits");
-    System.out.println("P - Show Payments");
-    System.out.println("R - Reporting");
-    System.out.println("H - Home");
-    String userInput2 = scanner.nextLine();
-
     Ledger ledger = new Ledger();
+
 
     boolean viewingLedger = true;
     while(viewingLedger){
+        System.out.println(" --- Ledger Home --- ");
+        System.out.println("Please select an option (A, D, P, R, H) from the list below.");
+        System.out.println("A - Show All");
+        System.out.println("D - Show Deposits");
+        System.out.println("P - Show Payments");
+        System.out.println("R - Reporting");
+        System.out.println("H - Home");
+        String userInput2 = scanner.nextLine();
+
         try{
             switch(userInput2){
                 case "A":
@@ -83,9 +85,10 @@ public void displayLedgerScreen(){
                     break;
                 default:
                     System.out.println("Please select a valid option.");
+                    break;
             }
         } catch(Exception ee){
-            System.out.println("Please select a valid option.");
+            System.out.println("Please select a valid option!");
         }
     }
 }
@@ -94,20 +97,22 @@ public void displayLedgerScreen(){
 public void displayReportingScreen(){
     Scanner scanner = new Scanner(System.in);
 
-    System.out.println(" --- Reports Home --- ");
-    System.out.println("Please select an option (1,2,3,4,5,0) to run a pre-defined report or run a custom search");
-    System.out.println("1 - Month to Date");
-    System.out.println("2 - Previous Month");
-    System.out.println("3 - Year to Date");
-    System.out.println("4 - Previous Year");
-    System.out.println("5 - Search by Vendor");
-    System.out.println("0 - Back to Report page");
-    int userInput3 = scanner.nextInt();
-
     Reports reportings = new Reports();
+
+    ArrayList<Transactions> rmoney = new ArrayList<>();
 
     boolean reporting = true;
     while(reporting){
+        System.out.println(" --- Reports Home --- ");
+        System.out.println("Please select an option (1,2,3,4,5,0) to run a pre-defined report or run a custom search");
+        System.out.println("1 - Month to Date");
+        System.out.println("2 - Previous Month");
+        System.out.println("3 - Year to Date");
+        System.out.println("4 - Previous Year");
+        System.out.println("5 - Search by Vendor");
+        System.out.println("0 - Back to Report page");
+        int userInput3 = scanner.nextInt();
+
         try {
             switch (userInput3) {
                 case 1:
@@ -123,20 +128,24 @@ public void displayReportingScreen(){
                     reportings.previousYear();
                     break;
                 case 5:
+                    scanner.nextLine();
+
                     System.out.println("What vendor would you like to look up?");
                     String selection = scanner.nextLine();
 
-                    reportings.searchVendor(Transactions, selection);
+                    reportings.searchVendor(selection);
                     break;
                 case 0:
                     displayLedgerScreen();
+                    reporting = false;
                     break;
                 default:
                     System.out.println("Please select a valid option.");
+                    break;
             }
 
         } catch (Exception r){
-            System.out.println("Please select a valid option.");
+            System.out.println("Please select a valid option!");
         }
     }
 
