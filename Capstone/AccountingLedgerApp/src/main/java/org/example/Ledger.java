@@ -41,6 +41,27 @@ public class Ledger {
         return transactions;
     }
 
+    public ArrayList<Transactions> listAllItems(){
+
+
+        try{
+            FileInputStream statement = new FileInputStream("src/main/resources/transactions.csv");
+            Scanner scanner = new Scanner(statement);
+
+            scanner.nextLine();
+
+            String input2;
+            while(scanner.hasNextLine()){
+                input2 = scanner.nextLine();
+                System.out.println(input2);
+            }
+
+        } catch (IOException ss){
+            System.out.println("File not found. Let's try again later.");
+        }
+        return null;
+    }
+
    /* public void addDeposit(ArrayList<Transactions> transactions){
         try{
             FileWriter addDeposit = new FileWriter("src/main/resources/transactions.csv", true);

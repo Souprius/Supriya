@@ -148,7 +148,7 @@ public void searchVendor(ArrayList<Transactions> transactions , String vendor){
         }
        search.close();
 
-       //i want it to print out the specific vendor lines
+       //I want it to print out the specific vendor lines
        FileInputStream vendorPull = new FileInputStream("src/main/resources/byVendorReport.txt");
        Scanner scanner = new Scanner(vendorPull);
 
