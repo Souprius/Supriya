@@ -5,11 +5,9 @@ import java.util.Scanner;
 
 
 public class UserInterface {
-    Ledger l = new Ledger();
 
     public void homeOptions(){
     Scanner scanner = new Scanner(System.in);
-
     Ledger statement = new Ledger();
 
     boolean banking = true;
@@ -26,9 +24,11 @@ public class UserInterface {
             switch(userInput){
                 case "D":
                     statement.addDeposit();
+                    banking = false;
                     break;
                 case "P":
                     statement.makeAPayment();
+                    banking = false;
                     break;
                 case "L":
                     displayLedgerScreen();
@@ -44,15 +44,16 @@ public class UserInterface {
             }
 
         }catch(Exception ex){
-            System.out.println("Please select a valid option.");
+            System.out.println("Please select a valid option!");
         }
     }
 }
 
+
 public void displayLedgerScreen(){
     Scanner scanner = new Scanner(System.in);
-
     Ledger ledger = new Ledger();
+
 
     boolean viewingLedger = true;
     while(viewingLedger){
@@ -65,17 +66,16 @@ public void displayLedgerScreen(){
         System.out.println("H - Home");
         String userInput2 = scanner.nextLine();
 
-        System.out.println(userInput2);
         try{
             switch(userInput2){
                 case "A":
                     ledger.showAllItems();
                     break;
                 case "D":
-                    ledger.showDeposit(l.listAllItems());
+                    ledger.showDeposit();
                     break;
                 case "P":
-                    ledger.showPayments(l.listAllItems());
+                    ledger.showPayments();
                     break;
                 case "R":
                     displayReportingScreen();
@@ -94,11 +94,10 @@ public void displayLedgerScreen(){
     }
 }
 
-
 public void displayReportingScreen(){
     Scanner scanner = new Scanner(System.in);
-
     Reports reportings = new Reports();
+
 
     boolean reporting = true;
     while(reporting){
@@ -115,25 +114,28 @@ public void displayReportingScreen(){
         try {
             switch (userInput3) {
                 case 1:
-                    reportings.monthToDate(l.listAllItems());
+                    reportings.monthToDate();
                     break;
                 case 2:
-                    reportings.previousMonth(l.listAllItems());
+                    reportings.previousMonth();
                     break;
                 case 3:
-                    reportings.yearToDate(l.listAllItems());
+                    reportings.yearToDate();
                     break;
                 case 4:
-                    reportings.previousYear(l.listAllItems());
+                    reportings.previousYear();
                     break;
                 case 5:
+                    scanner.nextLine();
+
                     System.out.println("What vendor would you like to look up?");
                     String selection = scanner.nextLine();
 
-                    reportings.searchVendor(l.listAllItems(), selection);
+                    reportings.searchVendor(selection);
                     break;
                 case 0:
-                    displayLedgerScreen();
+                    displayReportingScreen();
+                    reporting = false;
                     break;
                 default:
                     System.out.println("Please select a valid option.");
@@ -141,7 +143,7 @@ public void displayReportingScreen(){
             }
 
         } catch (Exception r){
-            System.out.println("Please select a valid option.");
+            System.out.println("Please select a valid option!");
         }
     }
 

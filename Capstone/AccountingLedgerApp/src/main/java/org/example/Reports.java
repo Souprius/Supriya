@@ -1,12 +1,8 @@
 package org.example;
 
-
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Scanner;
+
 
 public class Reports {
 
@@ -14,28 +10,16 @@ public class Reports {
     //previous month
     //year to date
     //previous year
-
-    public void monthToDate(ArrayList<Transactions> transactions){
-        LocalDate monthToDate = LocalDate.of(2023,10,1);
+Ledger l = new Ledger();
+    public void monthToDate(){
+        ArrayList<Transactions> monthreport = l.loadTransactions();
         try{
-            FileWriter writeMonth = new FileWriter("src/main/resources/monthToDateReport.txt");
-            writeMonth.write("date|time|description|vendor|amount" + "\n");
-
-            for(Transactions mtd: transactions){
-                if (!monthToDate.equals(LocalDate.now())){
-                    writeMonth.write(mtd.getDate() + "|" + mtd.getTime() + "|" + mtd.getDesc() + "|" + mtd.getVendor()+ "|" + mtd.getAmount() + "\n");
-
+            LocalDate mTD = LocalDate.now();
+            for(Transactions t : monthreport){
+                if(mTD.isBefore(LocalDate.parse(t.getDate()))){
+                    System.out.printf("Date: %s  | Time: %s  | Description: %s  | Vendor: %s  | Amount: %s \n",
+                            t.getDate(), t.getTime(), t.getDesc(), t.getVendor(), t.getAmount());
                 }
-            }
-            writeMonth.close();
-
-            FileInputStream month = new FileInputStream("src/main/resources/monthToDateReport.txt");
-            Scanner scanner = new Scanner(month);
-
-            String input;
-            while(scanner.hasNextLine()){
-                input = scanner.nextLine();
-                System.out.println(input);
             }
         } catch(Exception x){
             System.out.println("Unable to generate report. Let's Try again.");
@@ -43,58 +27,34 @@ public class Reports {
 
     }
 
-    public void previousMonth(ArrayList<Transactions> transactions){
-        LocalDate date = LocalDate.of(2023,9,1);
+    public void previousMonth(){
+        ArrayList<Transactions> previousreport = l.loadTransactions();
+
         try{
-            FileWriter writePrevious = new FileWriter("src/main/resources/previousMonthReport.txt");
-            writePrevious.write("date|time|description|vendor|amount" + "\n");
-
-            for(Transactions pm : transactions){
-                if(!date.equals(LocalDate.now())){
-                    writePrevious.write(pm.getDate() + "|" + pm.getTime() +"|"+ pm.getDesc() +"|"+ pm.getVendor() +"|"+ pm.getAmount() + "\n");
-
+            LocalDate previous = LocalDate.now().minusDays(30);
+            for(Transactions t : previousreport){
+                if(previous.isBefore(LocalDate.parse(t.getDate())) && !previous.isAfter(LocalDate.now())){
+                    System.out.printf("Date: %s  | Time: %s  | Description: %s  | Vendor: %s  | Amount: %s \n",
+                            t.getDate(), t.getTime(), t.getDesc(), t.getVendor(), t.getAmount());
                 }
-            }
-            writePrevious.close();
-
-            FileInputStream previous = new FileInputStream("src/main/resources/previousMonthReport.txt");
-            Scanner scanner = new Scanner(previous);
-
-            String input;
-            while(scanner.hasNextLine()){
-                input = scanner.nextLine();
-                System.out.println(input);
             }
 
         } catch (Exception i){
             System.out.println("Unable to generate report. Let's Try again.");
         }
 
-        System.out.println();
-
     }
 
-    public void yearToDate(ArrayList<Transactions> transactions){
-        LocalDate startDate = LocalDate.of(2023,1,1);
+    public void yearToDate(){
+        ArrayList<Transactions> yearreport = l.loadTransactions();
+
         try {
-            FileWriter writeYear = new FileWriter("src/main/resources/yearToDateReport.txt");
-            writeYear.write("date|time|description|vendor|amount" + "\n");
-
-            for(Transactions report : transactions) { //check reports.toArray(new Transaction[0])
-                if(!startDate.equals(LocalDate.of(2023,12,31))){
-                    writeYear.write(report.getDate() + "|" + report.getTime() + "|" + report.getDesc() + "|" + report.getVendor() + "|" + report.getAmount() + "\n");
-
+            LocalDate ytd = LocalDate.now().minusYears(1);
+            for(Transactions t : yearreport){
+                if(ytd.isBefore(LocalDate.parse(t.getDate())) && !ytd.isAfter(LocalDate.now())){
+                    System.out.printf("Date: %s  | Time: %s  | Description: %s  | Vendor: %s  | Amount: %s \n",
+                            t.getDate(), t.getTime(), t.getDesc(), t.getVendor(), t.getAmount());
                 }
-            }
-            writeYear.close();
-
-            FileInputStream year = new FileInputStream("src/main/resources/yearToDateReport.txt");
-            Scanner scanner = new Scanner(year);
-
-            String input;
-            while(scanner.hasNextLine()){
-                input = scanner.nextLine();
-                System.out.println(input);
             }
 
         } catch (Exception ex){
@@ -102,28 +62,19 @@ public class Reports {
         }
     }
 
-    public void previousYear(ArrayList<Transactions> transactions){
-        LocalDate pyDate = LocalDate.of(2022,1,1);
+    public void previousYear(){
+        ArrayList<Transactions> previousyear = l.loadTransactions();
+
         try{
-            FileWriter pYear = new FileWriter("src/main/resources/previousYearReport.txt");
-            pYear.write("date|time|description|vendor|amount" + "\n");
-
-            for (Transactions py : transactions){
-                if (!pyDate.equals(LocalDate.now())){
-                    pYear.write(py.getDate() +"|"+ py.getTime() +"|"+ py.getDesc() +"|"+ py.getVendor() +"|"+ py.getAmount() + "\n");
-
+            LocalDate py = LocalDate.now().minusYears(1);
+            for(Transactions t: previousyear){
+                LocalDate getDate = LocalDate.parse(t.getDate());
+                if(py.isBefore(LocalDate.now()) && getDate.isBefore(LocalDate.now())){
+                    System.out.printf("Date: %s  | Time: %s  | Description: %s  | Vendor: %s  | Amount: %s \n",
+                            t.getDate(), t.getTime(), t.getDesc(), t.getVendor(), t.getAmount());
                 }
             }
-            pYear.close();
-            FileInputStream previous = new FileInputStream("src/main/resources/previousYearReport.txt");
-            Scanner scanner = new Scanner(previous);
 
-            String input;
-            while(scanner.hasNextLine()){
-                input = scanner.nextLine();
-                System.out.println(input);
-
-            }
         }catch(Exception y){
             System.out.println("Unable to generate report. Let's Try again.");
         }
@@ -131,35 +82,19 @@ public class Reports {
     }
 
     //search by vendor
-public void searchVendor(ArrayList<Transactions> transactions , String vendor){
-        //ArrayList<Transactions> transactions = ShowAllItems();
-//should iterate to search for vendor
-   try{
-         Transactions vendorID = null;
-       FileWriter search = new FileWriter("src/main/resources/byVendorReport.txt");
-       search.write("date|time|description|vendor|amount" + "\n");
-
-        for(Transactions v: transactions){
-            if(v.getVendor().equalsIgnoreCase(vendor)){
-                vendorID = v;
-                search.write(vendorID.getDate() + "|" + vendorID.getTime() + "|" + vendorID.getDesc() + "|" + vendorID.getVendor() + "|" + vendorID.getAmount() + "\n");
-
+    public void searchVendor(String vendor){
+        ArrayList<Transactions> vendoreport = l.loadTransactions();
+            //should iterate to search for vendor
+        try{
+            for(Transactions t : vendoreport){
+                if(t.getVendor().equalsIgnoreCase(vendor)){
+                    System.out.printf("Date: %s  | Time: %s  | Description: %s  | Vendor: %s  | Amount: %s \n",
+                            t.getDate(), t.getTime(), t.getDesc(), t.getVendor(), t.getAmount());
+                }
             }
-        }
-       search.close();
-
-       //I want it to print out the specific vendor lines
-       FileInputStream vendorPull = new FileInputStream("src/main/resources/byVendorReport.txt");
-       Scanner scanner = new Scanner(vendorPull);
-
-       String input;
-       while(scanner.hasNextLine()){
-           input = scanner.nextLine();
-           System.out.println(input);
-       }
-   }    catch (Exception s){
+        } catch (Exception s){
             System.out.println("Unable to generate report. Let's try again.");
         }
-        //will need to use for loop to iterate through array
-}
+
+    }
 }
