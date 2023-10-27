@@ -8,7 +8,6 @@ public class UserInterface {
 
     public void homeOptions(){
     Scanner scanner = new Scanner(System.in);
-
     Ledger statement = new Ledger();
 
     boolean banking = true;
@@ -25,9 +24,11 @@ public class UserInterface {
             switch(userInput){
                 case "D":
                     statement.addDeposit();
+                    banking = false;
                     break;
                 case "P":
                     statement.makeAPayment();
+                    banking = false;
                     break;
                 case "L":
                     displayLedgerScreen();
@@ -93,13 +94,10 @@ public void displayLedgerScreen(){
     }
 }
 
-
 public void displayReportingScreen(){
     Scanner scanner = new Scanner(System.in);
-
     Reports reportings = new Reports();
 
-    ArrayList<Transactions> rmoney = new ArrayList<>();
 
     boolean reporting = true;
     while(reporting){
@@ -136,7 +134,7 @@ public void displayReportingScreen(){
                     reportings.searchVendor(selection);
                     break;
                 case 0:
-                    displayLedgerScreen();
+                    displayReportingScreen();
                     reporting = false;
                     break;
                 default:

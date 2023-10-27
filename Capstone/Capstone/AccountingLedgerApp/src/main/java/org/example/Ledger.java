@@ -44,15 +44,16 @@ public class Ledger {
 
         } catch (FileNotFoundException ex) {
             System.out.println("Could not find transactions. Let's try again later.");
+        } catch (ArrayIndexOutOfBoundsException e){
         }
         return transactions;
     }
 
     public void addDeposit(){
-        System.out.println("What is the date of transaction? Format: YYYY-MM-DD");
+        System.out.println("What is the date of transaction? Format: yyyy-MM-dd");
         String date = scanner.nextLine();
 
-        System.out.println("What is the time of the transaction? Format: HH:MM:SS");
+        System.out.println("What is the time of the transaction? Format: HH:MM:ss");
         String time = scanner.nextLine();
 
         System.out.println("What is a short description of the transaction?");
@@ -82,10 +83,10 @@ public class Ledger {
     Scanner scanner = new Scanner(System.in);
     public void makeAPayment(){
 
-        System.out.println("What is the date of transaction? Format: YYYY-MM-DD");
+        System.out.println("What is the date of transaction? Format: yyyy-MM-dd");
         String dDate = scanner.nextLine();
 
-        System.out.println("What is the time of the transaction? Format: HH:MM:SS");
+        System.out.println("What is the time of the transaction? Format: HH:MM:ss");
         String dTime = scanner.nextLine();
 
         System.out.println("What is a short description of the transaction?");
@@ -116,7 +117,7 @@ public class Ledger {
         ArrayList<Transactions> deposit = loadTransactions();
         for(Transactions sd: deposit){
             if(sd.getAmount() > 1){
-                System.out.printf("Date: %s  | Time: %s  | Description: %s  | Vendor: %s  | Amount: %s ",
+                System.out.printf("Date: %s  | Time: %s  | Description: %s  | Vendor: %s  | Amount: %s \n",
                         sd.getDate(), sd.getTime(), sd.getDesc(), sd.getVendor(), sd.getAmount());
             }
         }
@@ -126,7 +127,7 @@ public class Ledger {
         ArrayList<Transactions> pay = loadTransactions();
         for(Transactions sp: pay){
             if(sp.getAmount() < 0){
-                System.out.printf("Date: %s  | Time: %s  | Description: %s  | Vendor: %s  | Amount: %s ",
+                System.out.printf("Date: %s  | Time: %s  | Description: %s  | Vendor: %s  | Amount: %s \n",
                         sp.getDate(), sp.getTime(), sp.getDesc(), sp.getVendor(), sp.getAmount());
             }
         }
