@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 
 public class Reports {
-
     //month to date
     //previous month
     //year to date

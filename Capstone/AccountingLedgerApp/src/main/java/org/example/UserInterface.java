@@ -24,11 +24,9 @@ public class UserInterface {
             switch(userInput){
                 case "D":
                     statement.addDeposit();
-                    banking = false;
                     break;
                 case "P":
                     statement.makeAPayment();
-                    banking = false;
                     break;
                 case "L":
                     displayLedgerScreen();
