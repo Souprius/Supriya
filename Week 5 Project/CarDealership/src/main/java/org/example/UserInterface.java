@@ -178,6 +178,7 @@ public class UserInterface {
 
         Vehicle addCar = new Vehicle(vin, year, make,model,type,color,odom,price);
         dealership.addVehicle(addCar);
+        System.out.println("This vehicle has been added. Thank you.");
     }
 
     public void processRemoveVehicleRequest(){
@@ -209,5 +210,7 @@ public class UserInterface {
 
         Vehicle removeV = new Vehicle(rVin,rYear,rMake,rModel,rType,rColor,rOdom,rPrice);
         dealership.removeVehicle(removeV);
+
+        System.out.println("This vehicle has been removed. Thank you.");
     }
 }

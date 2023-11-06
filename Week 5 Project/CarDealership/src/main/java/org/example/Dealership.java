@@ -116,11 +116,7 @@ public class Dealership {
 
     //not sure if this is working correctly will need to test
     public List<Vehicle> getAllVehicles(){
-         Dealership d = fm.getDealership();
-
-        System.out.println(d);
-
-        return null;
+         return inventory;
     }
 
     public void addVehicle(Vehicle vehicle){
