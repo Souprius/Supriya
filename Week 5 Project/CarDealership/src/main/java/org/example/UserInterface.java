@@ -3,6 +3,9 @@ package org.example;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+//The only thing I'll say here is that there might need to be more checks on
+//protecting yourself from the user putting in bad data. You're just sort of
+//assuming they'll give you data in the form you expect.
 public class UserInterface {
 
     Dealership dealership = new Dealership("Souprius Autos","940 W Round Grove Rd", "867-5309");
