@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 public class DealershipFileManager {
 
+    //This would make for a good static method and then a private constructor for DealershipFileManager
 
     public Dealership getDealership(){
 
