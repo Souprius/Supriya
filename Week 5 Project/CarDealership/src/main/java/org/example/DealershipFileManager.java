@@ -45,7 +45,7 @@ public class DealershipFileManager {
 
     public void saveDealership(Dealership dealership){
         try{
-            FileWriter newCars = new FileWriter("src/main/resources/inventory.csv");
+            FileWriter newCars = new FileWriter("src/main/resources/inventory.csv", false);
             for(Vehicle v: dealership.getAllVehicles()){
                 newCars.write("VIN: " + v.getVin() + "|" + "Year: " + v.getYear() + "|" + "Make: " + v.getMake() +
                         "|" + "Model: " + v.getModel() + "|" + "Vehicle Type: " + v.getVehicleType()+ "|" + "Color: "

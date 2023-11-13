@@ -1,7 +1,10 @@
 package org.example;
 
+import java.rmi.dgc.Lease;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.List;
 
 public class UserInterface {
 
@@ -33,6 +36,8 @@ public class UserInterface {
         System.out.println("7 - List All");
         System.out.println("8 - Add vehicle");
         System.out.println("9 - Remove Vehicle");
+        System.out.println("10 - Buy Vehicle");
+        System.out.println("11 - Lease Vehicle");
         System.out.println("99 - Quit");
         int answer = scanner.nextInt();
 
@@ -62,6 +67,10 @@ public class UserInterface {
                     processAddVehicleRequest();
                 case 9:
                     processRemoveVehicleRequest();
+                case 10:
+                    processBuyVehicle();
+                case 11:
+                    processLeaseVehicle();
                 case 99:
                     System.out.println("See you later!");
                     System.exit(0);
@@ -74,7 +83,7 @@ public class UserInterface {
 
     }
 
-    private void displayVehicles(ArrayList<Vehicle> vehicles){
+    private void displayVehicles(List<Vehicle> vehicles){
         for(Vehicle v: vehicles){
             System.out.printf("VIN: %d  | Year: %d  | Make: %s  | Model:%s  | Vehicle Type: %s  | Color: %s  | Odometer: %d  | Price: %.2f  \n",
                     v.getVin(), v.getYear(), v.getMake(), v.getModel(), v.getVehicleType(), v.getColor(), v.getOdometer(), v.getPrice());
@@ -90,7 +99,8 @@ public class UserInterface {
         int max = scanner.nextInt();
 
         scanner.nextLine();//consume line
-        dealership.getVehiclesByPrice(min, max);
+        List<Vehicle> printPrice = dealership.getVehiclesByPrice(min, max);
+        displayVehicles(printPrice);
     }
 
     public void processGetByMakeModelRequest(){
@@ -100,7 +110,8 @@ public class UserInterface {
         System.out.println("What is the model?");
         String model = scanner.nextLine();
 
-        dealership.getVehicleByMake(make,model);
+        List<Vehicle> printModel = dealership.getVehicleByMake(make,model);
+        displayVehicles(printModel);
     }
 
    public void processGetByYearRequest(){
@@ -115,14 +126,16 @@ public class UserInterface {
 
        scanner.nextLine();//consume
 
-       dealership.getVehiclesByYear(yearMin, yearMax);
+       List<Vehicle> printYear = dealership.getVehiclesByYear(yearMin, yearMax);
+       displayVehicles(printYear);
     }
 
     public void processGetByColorRequest(){
         System.out.println("What color vehicle are you looking for?");
         String color = scanner.nextLine();
 
-        dealership.getVehiclesByColor(color);
+        List<Vehicle> printColor = dealership.getVehiclesByColor(color);
+        displayVehicles(printColor);
     }
 
     public void processGetByMileageRequest(){
@@ -135,18 +148,21 @@ public class UserInterface {
 
         scanner.nextLine();//consume
 
-        dealership.getVehiclesByMileage(odometerMin,odometerMax);
+        List<Vehicle> printMileage =  dealership.getVehiclesByMileage(odometerMin,odometerMax);
+        displayVehicles(printMileage);
     }
 
     public void processGetByVehicleTypeRequest(){
         System.out.println("What is the vehicle type you're looking for?");
         String vehicleType = scanner.nextLine();
 
-        dealership.getVehiclesByType(vehicleType);
+        List<Vehicle> printType = dealership.getVehiclesByType(vehicleType);
+        displayVehicles(printType);
     }
 
     public void processGetByAllVehiclesRequest(){
-        dealership.getAllVehicles();
+        List<Vehicle> printAll = dealership.getAllVehicles();
+        displayVehicles(printAll);
     }
 
     public void processAddVehicleRequest(){
@@ -212,5 +228,89 @@ public class UserInterface {
         dealership.removeVehicle(removeV);
 
         System.out.println("This vehicle has been removed. Thank you.");
+    }
+
+    DealershipFileManager fm = new DealershipFileManager();
+
+    public void processBuyVehicle(){
+        System.out.println("What is you name?");
+        String name = scanner.nextLine();
+
+        System.out.println("What is your email address?");
+        String email = scanner.nextLine();
+
+        System.out.println("What is the vehicle VIN you would like to purchase?");
+        int VIN = scanner.nextInt();
+
+        Vehicle option = null;
+        //use vin and search through vehicle array/inventory
+        for(Vehicle vehicle: dealership.getAllVehicles()){
+            if(VIN == vehicle.getVin()){
+                option = vehicle;
+            }
+        }
+
+        System.out.printf("Is %s the vehicle you would like to purchase? True/False",option);
+        boolean readyToPurchase = scanner.nextBoolean();
+
+        //need to use vehicle OPTION to get the total price & monthly payment
+        //will I need to instantiate another contract?
+        if (readyToPurchase){
+            //instantiate sales contract
+            SalesContract sc = null;
+            String date = String.valueOf(LocalDate.now());
+
+           double totalPrice = sc.getTotalPrice();
+           double monthlyPayment = sc.getMonthlyPayment();
+           double processing = sc.getProcessingFee();
+           double salesTax = sc.getSalesTax();
+           double recordingFee = sc.getRecordingFee();
+
+           boolean financing = sc.isFinancing();
+
+           if (financing){
+               sc = new SalesContract(date,name,email,option,totalPrice,monthlyPayment,salesTax,recordingFee,true,processing);
+               ContractFileManager.saveContract(sc);
+           } else {
+               sc = new SalesContract(date,name,email,option,totalPrice,monthlyPayment,salesTax,recordingFee,false,processing);
+               ContractFileManager.saveContract(sc);
+           }
+
+            System.out.printf("For vehicle %s, the total payment is $%.2f and the monthly payment is $%.2f.", option,totalPrice,monthlyPayment);
+        }
+    }
+
+    public void processLeaseVehicle(){
+        System.out.println("What is your name?");
+        String name = scanner.nextLine();
+
+        System.out.println("What is your email address?");
+        String email = scanner.nextLine();
+
+        System.out.println("What is the VIN of the vehicle you would like to lease?");
+        int VIN = scanner.nextInt();
+
+        Vehicle selection = null;
+        for(Vehicle vehicle: dealership.getAllVehicles()){
+            if(VIN == vehicle.getVin()){
+                selection = vehicle;
+            }
+        }
+
+        System.out.printf("Is %s the vehicle you would like to purchase? True/False",selection);
+        boolean isLeasing = scanner.nextBoolean();
+
+        if(isLeasing){
+            LeaseContract lc = null;
+
+            String date = String.valueOf(LocalDate.now());
+            double expectedValue = lc.getExpectedEndingValue();
+            double leaseFee = lc.getLeaseFee();
+            double totalPrice = lc.getTotalPrice();
+            double monthlyPayment = lc.getMonthlyPayment();
+
+            lc = new LeaseContract(date,name,email,selection,expectedValue,leaseFee,totalPrice,monthlyPayment);
+            ContractFileManager.saveContract(lc);
+        }
     }
 }

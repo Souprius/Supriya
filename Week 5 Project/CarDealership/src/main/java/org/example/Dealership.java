@@ -48,11 +48,9 @@ public class Dealership {
         List<Vehicle> searchPrice = new ArrayList<>();
         for(Vehicle v: this.inventory){
             if(v.getPrice() >= min && v.getPrice() <= max){
-                System.out.printf("VIN: %d  | Year: %d  | Make: %s  | Model:%s  | Vehicle Type: %s  | Color: %s  | Odometer: %d  | Price: %.2f  \n",
-                            v.getVin(), v.getYear(), v.getMake(), v.getModel(), v.getVehicleType(), v.getColor(), v.getOdometer(), v.getPrice());
-                }
-            searchPrice.add(v);
+                searchPrice.add(v);
             }
+        }
         return searchPrice;
     }
 
@@ -60,10 +58,8 @@ public class Dealership {
         List<Vehicle> searchMake = new ArrayList<>();
         for(Vehicle v: this.inventory){
             if(v.getMake().equalsIgnoreCase(make) && v.getModel().equalsIgnoreCase(model)){
-                System.out.printf("VIN: %d  | Year: %d  | Make: %s  | Model:%s  | Vehicle Type: %s  | Color: %s  | Odometer: %d  | Price: %.2f  \n",
-                            v.getVin(), v.getYear(), v.getMake(), v.getModel(), v.getVehicleType(), v.getColor(), v.getOdometer(), v.getPrice());
-                }
-            searchMake.add(v);
+                searchMake.add(v);
+            }
         }
 
         return searchMake;
@@ -72,10 +68,8 @@ public class Dealership {
         List<Vehicle> searchYear = new ArrayList<>();
         for(Vehicle v: this.inventory){
             if(v.getYear() >= min && v.getYear() <= max){
-                System.out.printf("VIN: %d  | Year: %d  | Make: %s  | Model:%s  | Vehicle Type: %s  | Color: %s  | Odometer: %d  | Price: %.2f  \n",
-                            v.getVin(), v.getYear(), v.getMake(), v.getModel(), v.getVehicleType(), v.getColor(), v.getOdometer(), v.getPrice());
-                }
-            searchYear.add(v);
+                searchYear.add(v);
+            }
         }
 
         return searchYear;
@@ -84,10 +78,8 @@ public class Dealership {
         List<Vehicle> searchColor = new ArrayList<>();
         for(Vehicle v: this.inventory){
             if(v.getColor().equalsIgnoreCase(color)){
-                System.out.printf("VIN: %d  | Year: %d  | Make: %s  | Model:%s  | Vehicle Type: %s  | Color: %s  | Odometer: %d  | Price: %.2f  \n",
-                        v.getVin(), v.getYear(), v.getMake(), v.getModel(), v.getVehicleType(), v.getColor(), v.getOdometer(), v.getPrice());
+                searchColor.add(v);
             }
-            searchColor.add(v);
         }
         return searchColor;
     }
@@ -95,10 +87,8 @@ public class Dealership {
         List<Vehicle> searchMileage = new ArrayList<>();
         for(Vehicle v: this.inventory){
             if(v.getOdometer() >= min && v.getOdometer() <= max){
-                System.out.printf("VIN: %d  | Year: %d  | Make: %s  | Model:%s  | Vehicle Type: %s  | Color: %s  | Odometer: %d  | Price: %.2f  \n",
-                        v.getVin(), v.getYear(), v.getMake(), v.getModel(), v.getVehicleType(), v.getColor(), v.getOdometer(), v.getPrice());
+                searchMileage.add(v);
             }
-           searchMileage.add(v);
         }
         return searchMileage;
     }
@@ -106,17 +96,15 @@ public class Dealership {
         List<Vehicle> searchType = new ArrayList<>();
         for(Vehicle v: this.inventory ){
             if(v.getVehicleType().equalsIgnoreCase(vehicleType)){
-                System.out.printf("VIN: %d  | Year: %d  | Make: %s  | Model:%s  | Vehicle Type: %s  | Color: %s  | Odometer: %d  | Price: %.2f  \n",
-                        v.getVin(), v.getYear(), v.getMake(), v.getModel(), v.getVehicleType(), v.getColor(), v.getOdometer(), v.getPrice());
+                searchType.add(v);
             }
-            searchType.add(v);
         }
         return searchType;
     }
 
     //not sure if this is working correctly will need to test
     public List<Vehicle> getAllVehicles(){
-         return inventory;
+         return this.inventory;
     }
 
     public void addVehicle(Vehicle vehicle){
