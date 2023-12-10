@@ -1,8 +1,6 @@
 package org.example;
 
-import java.rmi.dgc.Lease;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.List;
 
